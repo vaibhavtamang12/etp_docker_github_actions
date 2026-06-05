@@ -1,0 +1,28 @@
+name: Run Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Pull Docker Image
+        run: docker pull nginx:latest
+
+      - name: Run Docker Container
+        run: |
+          docker run -d \
+            --name my-nginx \
+            -p 8080:80 \
+            nginx:latest
+      - name: Verify Container
+        run: |
+          docker ps
+          curl http://localhost:8000
